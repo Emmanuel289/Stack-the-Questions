@@ -1,13 +1,14 @@
-import requests  
-import json   
-from datetime import datetime as dt   
+import requests  #requests enable a client to make requests to a web server
+import json      #json is a text-based format used to store and transmit data objects consisting of key-value pairs or array data types
 
-url = 'https://api.stackexchange.com/2.2/questions?order=desc&sort=activity&site=stackoverflow'  #API endpoint for getting all the questions on SO
 
-response = requests.get(url)
+#print(response.json())  #return the response as json.
 
-def get_all():  #list all the questions on SO
-	  
+#print(response.json()['items']) #Inspect the items attribute which contains the list of questions
+
+
+def get_all(url):
+	response = requests.get(url)  #send arequst to an API endpoint to get all questions
 
 	for idx, question in enumerate(response.json()['items']):
 
@@ -17,18 +18,7 @@ def get_all():  #list all the questions on SO
 
 
 
-def get_unaswered():  #list all the questions on the query date
-	print('The list of unanswered questions on {} are: '.format(dt.now()))
-
-	for idx, question in enumerate(response.json()['items']):
-		if question['answer_count'] == 0:
-			print('Q{} : {}'.format(idx+1, question['title']))
-			print()
-
-
 
 url = 'https://api.stackexchange.com/2.2/questions?order=desc&sort=activity&site=stackoverflow'
 
-print(get_all())
-
-print(get_unaswered())
+print(get_all(url))  #get all questions on stack overflow
